@@ -1,0 +1,21 @@
+name: PR Title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const title = context.payload.pull_request.title;
+            const pattern = /^\[(FEAT|FIX|REFACTOR|TEST|DOCS|CHORE|HOTFIX|RELEASE)\] .+/;
+            if (!pattern.test(title)) {
+              core.setFailed('PR 제목은 [TYPE] 작업 내용 요약 형식이어야 합니다.');
+            }

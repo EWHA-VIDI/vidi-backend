@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -eu
+
+subject="$(sed -e '/^[[:space:]]*#/d' -e '/^[[:space:]]*$/d' "$1" | sed -n '1p')"
+pattern='^(feat|fix|refactor|test|docs|chore|hotfix|release)\([[:alnum:]_-]+\): .+ \[VIDI-[0-9]+\]$'
+
+case "$subject" in
+  Merge\ * | Revert\ * | fixup!\ * | squash!\ *)
+    exit 0
+    ;;
+esac
+
+if printf '%s\n' "$subject" | grep -Eq "$pattern"; then
+  exit 0
+fi
+
+echo "Invalid commit message."
+echo "Expected: type(scope): 작업 내용 [VIDI-번호]"
+exit 1

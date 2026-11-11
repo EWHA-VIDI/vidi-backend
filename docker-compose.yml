@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: vidi-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-vidi}
+      POSTGRES_USER: ${DB_USERNAME:-vidi}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-vidi}
+      TZ: UTC
+    ports:
+      - "5432:5432"
+    volumes:
+      - vidi-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-vidi} -d ${DB_NAME:-vidi}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  vidi-postgres-data:

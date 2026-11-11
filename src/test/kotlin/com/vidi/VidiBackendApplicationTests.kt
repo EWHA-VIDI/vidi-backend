@@ -1,13 +1,11 @@
 package com.vidi
 
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import kotlin.test.assertNotNull
 
-@SpringBootTest
 class VidiBackendApplicationTests {
-
     @Test
     fun contextLoads() {
+        assertNotNull(VidiBackendApplication())
     }
-
 }

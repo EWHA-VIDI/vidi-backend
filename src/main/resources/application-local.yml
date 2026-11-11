@@ -1,0 +1,26 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/vidi}
+    username: ${DB_USERNAME:vidi}
+    password: ${DB_PASSWORD:vidi}
+
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+  jwt:
+    secret: ${JWT_SECRET:local-development-secret-key-change-before-production}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.vidi: DEBUG
+    org.hibernate.SQL: DEBUG
