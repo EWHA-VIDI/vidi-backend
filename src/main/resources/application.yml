@@ -15,8 +15,9 @@ spring:
     enabled: true
   jackson:
     time-zone: UTC
-    serialization:
-      write-dates-as-timestamps: false
+    datatype:
+      datetime:
+        write-dates-as-timestamps: false
 
 server:
   forward-headers-strategy: framework
