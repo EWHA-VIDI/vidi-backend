@@ -38,3 +38,12 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.log
+
+# Python deployment checks
+__pycache__/
