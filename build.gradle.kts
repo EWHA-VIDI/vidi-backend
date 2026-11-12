@@ -1,9 +1,13 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     kotlin("jvm") version "2.3.21"
     kotlin("plugin.spring") version "2.3.21"
     id("org.springframework.boot") version "4.1.2"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "2.3.21"
+    id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
 group = "com.vidi"
@@ -61,4 +65,31 @@ allOpen {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+ktlint {
+    version.set("1.8.0")
+}
+
+detekt {
+    buildUponDefaultConfig = true
+}
+
+// Detekt 1.x analyzes Kotlin source with its supported JVM target.
+// Application compilation and runtime continue to use Java 25.
+tasks.withType<Detekt>().configureEach {
+    jvmTarget = "21"
+}
+
+tasks.bootJar {
+    archiveFileName.set("vidi-backend.jar")
+}
+
+// Spring dependency management must not replace Detekt's embedded compiler.
+configurations.named("detekt") {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.jetbrains.kotlin") {
+            useVersion("2.0.21")
+        }
+    }
 }
