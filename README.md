@@ -48,3 +48,8 @@ Swagger는 local에서만 켜며 `/v3/api-docs`, `/swagger-ui/index.html`도 현
 조회 서비스와 변경 서비스는 분리하고 다른 도메인의 Repository를 직접 사용하지 않는다.
 작업 전에 `AGENTS.md`와 관련 규칙 파일을 읽는다.
 팀원 환경에서의 실행과 2인 리뷰는 PR 체크리스트에서 별도로 확인한다.
+
+## 배포
+
+[컨테이너·OIDC·ECR·SSM 배포 설정](docs/deployment.md)을 사용한다.
+FE Dockerfile과 Nginx 설정도 공통 인프라의 deploy 디렉터리에서 관리한다.
