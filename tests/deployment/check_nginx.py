@@ -58,6 +58,7 @@ def main():
 http {
     server {
         listen 8080;
+        if ($http_host ~ "_") { return 400; }
         location = /actuator/health { return 200 '{"status":"UP"}'; }
         location / { return 200 "$request_uri"; }
     }
