@@ -32,11 +32,22 @@ docker compose --project-directory "$validation_dir" --env-file "$validation_dir
 mv backend.env.next backend.env
 mv images.env.next images.env
 docker compose --env-file images.env -f compose.yml up -d
-for attempt in $(seq 1 60); do
-    if curl -fsS http://127.0.0.1:8080/actuator/health | python3 -c 'import json,sys;sys.exit(json.load(sys.stdin).get("status") != "UP")'; then
-        curl -fsS http://127.0.0.1:8088/healthz >/dev/null
+health_is_up() {
+    local body
+    body=$(curl --fail --silent --show-error --connect-timeout 2 --max-time 5 "$1") || return 1
+    python3 -c 'import json,sys; sys.exit(json.load(sys.stdin).get("status") != "UP")' <<<"$body"
+}
+
+deadline=$((SECONDS + 120))
+while (( SECONDS < deadline )); do
+    if health_is_up http://127.0.0.1:8080/actuator/health &&
+        health_is_up http://127.0.0.1:8088/healthz/backend &&
+        curl --fail --silent --show-error --connect-timeout 2 --max-time 5 \
+            http://127.0.0.1:8088/healthz >/dev/null; then
         exit 0
     fi
     sleep 2
 done
+
+printf 'Deployment readiness checks did not pass.\n' >&2
 exit 1

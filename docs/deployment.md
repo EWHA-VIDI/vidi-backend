@@ -72,7 +72,9 @@ Cloudflare와 EC2 origin TLS가 검증되기 전에는 공개 배포 완료로 �
 배포 스크립트는 SSM 값을 권한 0600의 backend.env로 받고 prod 프로필로 실행한다.
 DB 비밀값은 VITE 환경변수나 Docker build argument로 전달하지 않는다.
 Nginx는 SPA deep link에 index.html을 제공하되 누락 asset과 API 오류는 그대로 반환한다.
-SSM 배포 성공은 BE health UP과 FE healthz를 확인한 뒤에만 기록한다.
+Nginx는 Docker DNS를 주기적으로 다시 조회해 백엔드 IP 변경을 반영한다.
+SSM 배포 성공은 BE health UP, Nginx를 거친 `/healthz/backend`의 UP, FE healthz를 모두 확인한 뒤에 기록한다.
+SSM 실행 결과가 아직 등록되지 않은 InvocationDoesNotExist는 재시도하고 권한 오류나 실패 상태는 즉시 종료한다.
 실패한 배포는 이전의 검증된 두 SHA 태그로 재실행한다. 자동 rollback은 구현하지 않는다.
 Flyway 변경이 있는 릴리스는 백업·역호환성을 확인하며 이미 실행한 migration을 되돌리지 않는다.
 
@@ -81,3 +83,14 @@ Flyway 변경이 있는 릴리스는 백업·역호환성을 확인하며 이미
 실제 AWS 변수·IAM·TLS·RDS 연결은 이 환경에 제공되지 않아 확인하지 않았다.
 production Environment 보호와 main/develop 승인 2명·필수 CI·직접 push 금지를 저장소 관리자가 적용한다.
 팀원 로컬 실행과 리뷰를 확인한 뒤 배포한다.
+
+## 회귀 검사
+
+```bash
+python3 -m unittest discover -s tests/deployment -p 'test_*.py'
+python3 tests/deployment/check_nginx.py
+```
+
+Nginx 검사는 Docker로 별도 네트워크와 컨테이너를 만들고 종료 시 정리한다.
+백엔드 IP 변경 후 프록시 복구와 proxied health, SPA·asset 처리를 확인한다.
+SSM 검사는 AWS를 호출하지 않고 응답 지연·실패·권한 오류를 재현한다.
