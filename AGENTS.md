@@ -4,8 +4,8 @@ VIDI는 유튜브 댓글의 조직적 바이럴 의심 패턴을 근거와 함�
 
 ## 명령어
 
-- Gradle은 JDK 21로 실행하고 앱은 JDK 25, DB는 MySQL 8.4를 사용한다.
-- README에 따라 환경변수를 주입하고 `docker compose up -d --wait`로 DB를 시작한다.
+- Gradle과 앱은 JDK 21, DB는 MySQL 8.4를 사용한다.
+- README에 따라 로컬 .env를 준비하고 `docker compose up -d --wait`로 DB를 시작한다.
 - `./gradlew bootRun`으로 실행한다.
 - `./gradlew build test ktlintCheck detekt`로 검사한다.
 - `./gradlew ktlintFormat`으로 Kotlin을 정리한다.
