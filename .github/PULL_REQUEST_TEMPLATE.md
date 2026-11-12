@@ -1,5 +1,5 @@
 <!--
-PR 제목 형식: type(scope): 작업 내용 [VIDI-번호]   예) [FEAT] 카카오 로그인 API 구현
+PR 제목 형식: type(scope): 작업 내용 [VIDI-번호]   예) feat(auth): 로그인 API 구현 [VIDI-번호]
 -->
 
 ## 📌 관련 이슈

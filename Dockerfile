@@ -1,4 +1,4 @@
-FROM eclipse-temurin:25-jre
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --chown=10001:10001 build/libs/vidi-backend.jar app.jar
 USER 10001:10001

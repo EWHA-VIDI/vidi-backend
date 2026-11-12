@@ -1,11 +1,11 @@
 Jira가 작업 관리의 기준(Single Source of Truth)이고, Jira 이슈 키 하나로 Branch, Commit, PR을 연결한다. GitHub는 코드 저장소, Pull Request, Code Review, CI/CD를 담당한다. Jira 상태는 자동화로 바뀌므로 사람이 직접 옮기지 않는다.
 
-| 항목 | 형식 | 예시 |
-| --- | --- | --- |
-| Jira Task | [영역] 작업 내용 | VIDI-101 [BE] Gradle 의존성 설정 |
-| Branch | type/이슈키-설명 | build/VIDI-101-gradle-dependency |
-| Commit | type(scope): 작업 내용 [이슈키] | build(config): Gradle 의존성 추가 [VIDI-101] |
-| PR 제목 | 커밋과 같은 형식 | build(config): Gradle 의존성 설정 [VIDI-101] |
+| 항목      | 형식                            | 예시                                         |
+| --------- | ------------------------------- | -------------------------------------------- |
+| Jira Task | [영역] 작업 내용                | VIDI-101 [BE] Gradle 의존성 설정             |
+| Branch    | type/이슈키-설명                | build/VIDI-101-gradle-dependency             |
+| Commit    | type(scope): 작업 내용 [이슈키] | build(config): Gradle 의존성 추가 [VIDI-101] |
+| PR 제목   | 커밋과 같은 형식                | build(config): Gradle 의존성 설정 [VIDI-101] |
 
 ### 핵심 원칙
 
@@ -44,21 +44,21 @@ revert: 로그인 기능 커밋 되돌리기 [VIDI-60]
 
 ### 1-2. Commit Type
 
-| Type | 설명 |
-| --- | --- |
-| feat | 새로운 기능 추가 |
-| fix | 버그 및 오류 수정 |
-| style | 포맷팅, 들여쓰기 등 스타일 수정 (기능 변경 없음) |
-| refactor | 기능 변경 없이 코드 구조 개선 |
-| docs | 문서 및 주석 수정 |
-| test | 테스트 코드 작성 및 수정 |
-| chore | 기타 작업, 패키지 관리, 설정 변경 |
-| build | 빌드 시스템, 의존성(Gradle, npm) 변경 |
-| ci | CI/CD 파이프라인 및 자동화 설정 |
-| perf | 성능 개선 |
-| revert | 이전 커밋 되돌리기 |
-| infra | 서버, DB, 클라우드 등 인프라 구축 및 설정 |
-| release | 배포 준비 및 버전 관리 |
+| Type     | 설명                                             |
+| -------- | ------------------------------------------------ |
+| feat     | 새로운 기능 추가                                 |
+| fix      | 버그 및 오류 수정                                |
+| style    | 포맷팅, 들여쓰기 등 스타일 수정 (기능 변경 없음) |
+| refactor | 기능 변경 없이 코드 구조 개선                    |
+| docs     | 문서 및 주석 수정                                |
+| test     | 테스트 코드 작성 및 수정                         |
+| chore    | 기타 작업, 패키지 관리, 설정 변경                |
+| build    | 빌드 시스템, 의존성(Gradle, npm) 변경            |
+| ci       | CI/CD 파이프라인 및 자동화 설정                  |
+| perf     | 성능 개선                                        |
+| revert   | 이전 커밋 되돌리기                               |
+| infra    | 서버, DB, 클라우드 등 인프라 구축 및 설정        |
+| release  | 배포 준비 및 버전 관리                           |
 
 infra, release는 Conventional Commits 기본 타입이 아니다. commitlint를 쓸 때 type-enum에 직접 추가해야 한다(10장 참고).
 
@@ -79,51 +79,51 @@ Scope는 선택이며, 분야별 Scope를 우선 쓴다. 목록에 없는 Scope�
 
 **공통**
 
-| Scope | 설명 |
-| --- | --- |
-| common | 공통 기능 및 유틸리티 |
-| config | 프로젝트 및 환경 설정 |
-| docs | 문서 및 주석 |
-| test | 테스트 관련 작업 |
-| ci | CI/CD 및 자동화 설정 |
-| infra | 서버, 클라우드 및 인프라 설정 |
-| build | 빌드 시스템 및 관련 설정 |
+| Scope  | 설명                          |
+| ------ | ----------------------------- |
+| common | 공통 기능 및 유틸리티         |
+| config | 프로젝트 및 환경 설정         |
+| docs   | 문서 및 주석                  |
+| test   | 테스트 관련 작업              |
+| ci     | CI/CD 및 자동화 설정          |
+| infra  | 서버, 클라우드 및 인프라 설정 |
+| build  | 빌드 시스템 및 관련 설정      |
 
 **Frontend**
 
-| Scope | 설명 |
-| --- | --- |
-| page | 페이지 구현 |
-| component | 공통 및 재사용 컴포넌트 |
-| ui | UI 및 스타일 |
-| router | 라우팅 및 페이지 이동 |
-| auth | 인증 및 인가 관련 화면과 기능 |
-| api | API 연동 및 요청·응답 처리 |
-| state | 전역 및 로컬 상태 관리 |
+| Scope     | 설명                          |
+| --------- | ----------------------------- |
+| page      | 페이지 구현                   |
+| component | 공통 및 재사용 컴포넌트       |
+| ui        | UI 및 스타일                  |
+| router    | 라우팅 및 페이지 이동         |
+| auth      | 인증 및 인가 관련 화면과 기능 |
+| api       | API 연동 및 요청·응답 처리    |
+| state     | 전역 및 로컬 상태 관리        |
 
 **Backend**
 
-| Scope | 설명 |
-| --- | --- |
-| auth | 인증 및 인가 |
-| user | 사용자 관련 기능 |
-| api | 공통 API 및 요청·응답 처리 |
-| db | 데이터베이스 및 데이터 접근 |
+| Scope    | 설명                        |
+| -------- | --------------------------- |
+| auth     | 인증 및 인가                |
+| user     | 사용자 관련 기능            |
+| api      | 공통 API 및 요청·응답 처리  |
+| db       | 데이터베이스 및 데이터 접근 |
 | security | 보안 설정 및 접근 권한 관리 |
-| common | 공통 로직 및 유틸리티 |
-| config | 서버 및 애플리케이션 설정 |
+| common   | 공통 로직 및 유틸리티       |
+| config   | 서버 및 애플리케이션 설정   |
 
 **Data**
 
-| Scope | 설명 |
-| --- | --- |
-| collection | 데이터 수집 |
-| preprocess | 데이터 전처리 |
-| eda | 탐색적 데이터 분석 |
-| feature | Feature Engineering |
-| model | 모델 학습 및 평가 |
-| notebook | Jupyter 및 Colab Notebook |
-| pipeline | 데이터 처리 파이프라인 |
+| Scope      | 설명                      |
+| ---------- | ------------------------- |
+| collection | 데이터 수집               |
+| preprocess | 데이터 전처리             |
+| eda        | 탐색적 데이터 분석        |
+| feature    | Feature Engineering       |
+| model      | 모델 학습 및 평가         |
+| notebook   | Jupyter 및 Colab Notebook |
+| pipeline   | 데이터 처리 파이프라인    |
 
 ## 2. Branch Convention
 
@@ -131,13 +131,13 @@ Scope는 선택이며, 분야별 Scope를 우선 쓴다. 목록에 없는 Scope�
 
 ### 2-1. 브랜치 종류
 
-| Branch | 설명 | 분기 위치 | 병합 대상 |
-| --- | --- | --- | --- |
-| main | 배포 가능한 안정 상태 | - | - |
-| develop | 개발 작업 통합 | main | - |
-| 작업 브랜치 | feat, fix, refactor, style, docs, test, chore, build, ci, perf, infra | develop | develop |
-| hotfix | 배포 후 긴급 오류 수정 | main | main, develop |
-| release | 배포 준비 및 버전 관리 | develop | main, develop |
+| Branch      | 설명                                                                  | 분기 위치 | 병합 대상     |
+| ----------- | --------------------------------------------------------------------- | --------- | ------------- |
+| main        | 배포 가능한 안정 상태                                                 | -         | -             |
+| develop     | 개발 작업 통합                                                        | main      | -             |
+| 작업 브랜치 | feat, fix, refactor, style, docs, test, chore, build, ci, perf, infra | develop   | develop       |
+| hotfix      | 배포 후 긴급 오류 수정                                                | main      | main, develop |
+| release     | 배포 준비 및 버전 관리                                                | develop   | main, develop |
 
 작업 브랜치의 type은 1-2의 Commit Type과 같은 목록을 쓴다. 기능 브랜치는 feature가 아니라 feat로 쓴다.
 
@@ -208,11 +208,11 @@ Epic: 프로젝트 뼈대·설정
 
 ### 3-1. Epic
 
-| Epic | 범위 |
-| --- | --- |
-| 1. 프로젝트 뼈대·설정 | Backend, Frontend, CI/CD 및 공통 개발 환경 구축 |
-| 2. 요청 흐름·인증 | API 요청부터 응답까지의 공통 처리와 인증·인가 흐름 |
-| 3. 데이터·UI 기반 | ERD 기반 데이터 계층 및 공통 UI 기반 |
+| Epic                  | 범위                                               |
+| --------------------- | -------------------------------------------------- |
+| 1. 프로젝트 뼈대·설정 | Backend, Frontend, CI/CD 및 공통 개발 환경 구축    |
+| 2. 요청 흐름·인증     | API 요청부터 응답까지의 공통 처리와 인증·인가 흐름 |
+| 3. 데이터·UI 기반     | ERD 기반 데이터 계층 및 공통 UI 기반               |
 
 ### 3-2. Task 제목
 
@@ -220,15 +220,16 @@ Epic: 프로젝트 뼈대·설정
 [영역] 작업 내용
 ```
 
-| 영역 | 설명 |
-| --- | --- |
-| BE | Backend 작업 |
-| FE | Frontend 작업 |
-| DATA | 데이터 작업 |
-| CI | CI/CD 및 자동화 |
-| INFRA | 인프라 작업 |
-| DOCS | 문서 작업 |
-| 공통 | 여러 영역에 공통으로 적용되는 작업 |
+| 영역  | 설명                               |
+| ----- | ---------------------------------- |
+| BE    | Backend 작업                       |
+| FE    | Frontend 작업                      |
+| DATA  | 데이터 작업                        |
+| CI    | CI/CD 및 자동화                    |
+| INFRA | 인프라 작업                        |
+| DOCS  | 문서 작업                          |
+| 공통  | 여러 영역에 공통으로 적용되는 작업 |
+
 - 제목 접두사와 같은 값을 Jira Component(또는 Label)에도 설정한다. 보드 필터와 통계는 이 필드로 한다.
 - BE와 FE에서 모두 작업이 필요하면 Task를 따로 만든다. [BE/FE] 로그인 구현이 아니라 [BE] 로그인 API 구현, [FE] 로그인 화면 및 API 연동으로 나눈다.
 - 한 영역에서 처리할 수 없는 공통·협업 작업만 [공통]으로 만든다.
@@ -268,9 +269,9 @@ Epic: 프로젝트 뼈대·설정
 
 Jira 이슈 키가 작업의 기본 식별자이고, 기능명세서 ID는 기획 문서와 연결할 때만 선택적으로 쓴다.
 
-| 구분 | 예시 | 쓰는 곳 |
-| --- | --- | --- |
-| Jira 이슈 키 | VIDI-42 | Branch, Commit, PR (필수) |
+| 구분          | 예시                    | 쓰는 곳                        |
+| ------------- | ----------------------- | ------------------------------ |
+| Jira 이슈 키  | VIDI-42                 | Branch, Commit, PR (필수)      |
 | 기능명세서 ID | AUTH-01 (카카오 로그인) | Jira Task 본문, PR 본문 (선택) |
 
 ## 4. Jira ↔ GitHub 연동 및 자동화
@@ -279,10 +280,11 @@ Jira와 GitHub는 연동되어 있고, Task 상태는 브랜치 생성과 PR 병
 
 ### 4-1. 상태 자동 전환
 
-| GitHub 이벤트 | Jira 상태 | 조건 |
-| --- | --- | --- |
-| 이슈 키가 들어간 브랜치 생성 | 개발중 | 브랜치명에 VIDI-12 형태의 키가 있어야 함 |
-| 연결된 PR 병합 | 개발 완료 | PR이 키로 이슈에 연결돼 있어야 함(브랜치명 또는 PR 제목) |
+| GitHub 이벤트                | Jira 상태 | 조건                                                     |
+| ---------------------------- | --------- | -------------------------------------------------------- |
+| 이슈 키가 들어간 브랜치 생성 | 개발중    | 브랜치명에 VIDI-12 형태의 키가 있어야 함                 |
+| 연결된 PR 병합               | 개발 완료 | PR이 키로 이슈에 연결돼 있어야 함(브랜치명 또는 PR 제목) |
+
 - Jira 상태는 사람이 직접 옮기지 않는다. 자동화가 없는 경우(작업 취소, 보류, 재오픈)만 수동으로 바꾼다.
 - 브랜치를 만들었는데 개발중으로 바뀌지 않았다면 브랜치명의 키를 먼저 점검한다.
 - PR 하나에 여러 키를 넣지 않는다.
@@ -290,11 +292,11 @@ Jira와 GitHub는 연동되어 있고, Task 상태는 브랜치 생성과 PR 병
 
 ### 4-2. 이슈 키가 인식되는 위치
 
-| 위치 | 예시 | 역할 |
-| --- | --- | --- |
-| 브랜치명 | feat/VIDI-12-login | 개발중 전환, 브랜치의 모든 커밋·PR 연결 |
-| 커밋 메시지 | feat(auth): 로그인 기능 구현 [VIDI-12] | 커밋 단위 추적 |
-| PR 제목 | feat(auth): 로그인 기능 구현 [VIDI-12] | PR 연결, Squash 후 develop 커밋에도 남음 |
+| 위치        | 예시                                   | 역할                                     |
+| ----------- | -------------------------------------- | ---------------------------------------- |
+| 브랜치명    | feat/VIDI-12-login                     | 개발중 전환, 브랜치의 모든 커밋·PR 연결  |
+| 커밋 메시지 | feat(auth): 로그인 기능 구현 [VIDI-12] | 커밋 단위 추적                           |
+| PR 제목     | feat(auth): 로그인 기능 구현 [VIDI-12] | PR 연결, Squash 후 develop 커밋에도 남음 |
 
 Jira 이슈의 Development 패널에서 연결된 브랜치, 커밋, PR과 빌드 상태를 확인할 수 있다.
 
@@ -324,7 +326,7 @@ infra: AWS 배포 환경 구성 [VIDI-35]
 
 ### 5-3. Merge 규칙
 
-- 작성자를 뛴 팀원 전원(현재 2명)을 리뷰어로 지정하고, 2명 모두 Approve해야 병합한다.
+- 작성자를 제외한 팀원 전원(현재 2명)을 리뷰어로 지정하고, 2명 모두 Approve해야 병합한다.
 - AI 리뷰봇의 리뷰는 참고한다. 승인 수에는 포함하지 않는다.
 - Request Changes가 있으면 수정 후 재리뷰를 요청한다.
 - CI가 모두 통과해야 병합한다.
@@ -336,13 +338,13 @@ infra: AWS 배포 환경 구성 [VIDI-35]
 
 리뷰 코멘트 앞에 우선순위 태그를 붙이고, P1·P2가 하나라도 있으면 Approve하지 않는다.
 
-| Priority | 의미 | 리뷰 방식 |
-| --- | --- | --- |
-| P1 | 반드시 수정해야 하는 심각한 문제 | Request Changes |
-| P2 | 적극적으로 고려해야 하는 개선 사항 | Request Changes |
-| P3 | 욬만하면 반영하는 것이 좋은 사항 | Comment |
-| P4 | 선택적인 개선 사항 | Approve |
-| P5 | 사소한 의견 및 참고 사항 | Approve |
+| Priority | 의미                               | 리뷰 방식       |
+| -------- | ---------------------------------- | --------------- |
+| P1       | 반드시 수정해야 하는 심각한 문제   | Request Changes |
+| P2       | 적극적으로 고려해야 하는 개선 사항 | Request Changes |
+| P3       | 웬만하면 반영하는 것이 좋은 사항   | Comment         |
+| P4       | 선택적인 개선 사항                 | Approve         |
+| P5       | 사소한 의견 및 참고 사항           | Approve         |
 
 표기 예시:
 
@@ -410,87 +412,42 @@ feat(preprocess): 사용자 데이터 전처리 [VIDI-80]
 
 규칙은 사람이 기억하는 대신 도구가 막는다. Squash Merge에서는 PR 제목이 최종 커밋이 되므로 PR 제목 검사가 가장 중요하다.
 
-| 도구 | 검사 대상 | 적용 레포 |
-| --- | --- | --- |
-| PR 제목 검사 (GitHub Action) | PR 제목 형식과 Jira 키 | 전체 |
-| 브랜치 보호 규칙 | main/develop 직접 push, 승인 수, CI 통과 | 전체 |
-| commitlint + husky | 로컬 커밋 메시지 | FE (Node 기반) |
-| ktlint / ESLint, Prettier | 코드 스타일 | BE / FE |
+| 도구                         | 검사 대상                                | 적용 레포      |
+| ---------------------------- | ---------------------------------------- | -------------- |
+| PR 제목 검사 (GitHub Action) | PR 제목 형식과 Jira 키                   | 전체           |
+| 브랜치 보호 규칙             | main/develop 직접 push, 승인 수, CI 통과 | 전체           |
+| commitlint + husky           | 로컬 커밋 메시지                         | FE (Node 기반) |
+| ktlint / ESLint, Prettier    | 코드 스타일                              | BE / FE        |
 
 BE·데이터 레포는 husky를 쓰지 않아도 된다. PR 제목 검사가 develop에 남는 커밋을 보장한다.
 
 ### 10-1. GitHub 레포 설정
 
-| 설정 위치 | 값 |
-| --- | --- |
+| 설정 위치                          | 값                                                                     |
+| ---------------------------------- | ---------------------------------------------------------------------- |
 | Settings → General → Pull Requests | Allow squash merging·Allow merge commits만 켜고, Rebase merging은 끈다 |
-| 같은 곳, Squash 기본 메시지 | Default to pull request title |
-| 같은 곳 | Automatically delete head branches 켜기 |
-| Branch protection (main, develop) | Require a pull request before merging, Required approvals 2 |
-| Branch protection (main, develop) | Require status checks to pass (빌드, 테스트, PR 제목 검사) |
-| Branch protection (main, develop) | Do not allow bypassing, force push·삭제 금지 |
+| 같은 곳, Squash 기본 메시지        | Default to pull request title                                          |
+| 같은 곳                            | Automatically delete head branches 켜기                                |
+| Branch protection (main, develop)  | Require a pull request before merging, Required approvals 2            |
+| Branch protection (main, develop)  | Require status checks to pass (빌드, 테스트, PR 제목 검사)             |
+| Branch protection (main, develop)  | Do not allow bypassing, force push·삭제 금지                           |
 
 ### 10-2. PR 제목 검사 워크플로
 
-`.github/workflows/pr-title.yml` (액션 버전은 적용 시 최신으로 확인)
+실제 구현은 각 레포의 `.github/workflows/pr-title.yml`과 `scripts/conventions.cjs`를 기준으로 확인한다.
 
-```yaml
-name: PR Title
-on:
-  pull_request:
-    types: [opened, edited, synchronize, reopened]
-
-jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: amannn/action-semantic-pull-request@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          types: |
-            feat
-            fix
-            style
-            refactor
-            docs
-            test
-            chore
-            build
-            ci
-            perf
-            revert
-            infra
-            release
-          requireScope: false
-          subjectPattern: ^.+ \[VIDI-\d+\]$
-          subjectPatternError: "PR 제목 끝에 [VIDI-123] 형태의 Jira 키를 넣어주세요."
-```
+- 제목 Action과 FE commitlint는 같은 validator를 사용한다.
+- scope는 선택이며 breaking change 표기를 허용한다.
+- 허용한 type, 120자 제한, 제목 끝 Jira 키 하나를 검사한다.
+- 정상·오류 제목 회귀 검사는 `node --test scripts/conventions.test.cjs`로 실행한다.
+- workflow의 Action 버전은 검증한 commit SHA로 고정한다.
 
 ### 10-3. commitlint 설정 (FE)
 
-`commitlint.config.js`, husky의 `commit-msg` 훅에서 실행한다.
+FE의 `commitlint.config.js`와 `.husky/commit-msg`를 기준으로 확인한다.
 
-```jsx
-export default {
-  extends: ['@commitlint/config-conventional'],
-  plugins: [
-    {
-      rules: {
-        'jira-key': ({ header }) => [
-          /\[VIDI-\d+\]$/.test(header ?? ''),
-          '제목 끝에 [VIDI-123] 형태의 Jira 키가 필요합니다',
-        ],
-      },
-    },
-  ],
-  rules: {
-    'type-enum': [2, 'always', [
-      'feat', 'fix', 'style', 'refactor', 'docs', 'test', 'chore',
-      'build', 'ci', 'perf', 'revert', 'infra', 'release',
-    ]],
-    'subject-case': [0],
-    'jira-key': [2, 'always'],
-  },
-};
-```
+- config-conventional을 확장하고 infra·release를 포함한 type 목록을 공유한다.
+- subject-case는 강제하지 않고 Jira 제목 검사를 공통 validator에 맡긴다.
+- pre-commit은 lint-staged로 변경 파일을 검사한다.
+- commit-msg는 commitlint로 실제 커밋 메시지를 검사한다.
+- 구현과 어긋나는 설정 예제를 이 문서에 복제하지 않는다.

@@ -5,23 +5,23 @@
 
 ## 로컬 실행
 
-Gradle 실행용 JDK 21, 애플리케이션용 JDK 25와 Docker Compose v2를 사용한다.
-안정 버전 Detekt 1.x의 런타임 호환성을 위해 JAVA_HOME은 JDK 21로 지정하고,
-JAVA_HOME_25_X64는 JDK 25 설치 경로로 지정한다. MySQL 8.4를 사용하며 H2로 대체하지 않는다.
+JDK 21과 Docker Compose v2를 사용한다. MySQL 8.4를 사용하며 H2로 대체하지 않는다.
 
 ```bash
 cp .env.example .env
-# .env의 DB_PASSWORD와 MYSQL_ROOT_PASSWORD에 서로 다른 로컬 비밀번호를 입력한다.
-# env 파일의 URL처럼 셸 특수문자가 있는 값은 작은따옴표로 감싼다.
-set -a
-. ./.env
-set +a
+# .env의 DB_PASSWORD에 로컬 개발용 비밀번호를 입력한다.
 docker compose up -d --wait
 ./gradlew build
 ./gradlew bootRun
 ```
 
-Spring Boot는 `.env`를 자동으로 읽지 않는다. IDE에도 같은 환경변수를 등록한다.
+PowerShell에서는 `Copy-Item .env.example .env`와 `./gradlew.bat`을 사용한다.
+local 프로필은 작업 디렉터리의 `.env`를 Java properties 형식으로 자동으로 읽는다.
+값은 `KEY=value`로 작성하고 따옴표로 감싸거나 `export`를 붙이지 않는다.
+Compose와 properties에서 해석이 달라지는 `$`, 역슬래시 등은 로컬 비밀번호에서 피한다.
+이미 주입한 운영체제 환경변수가 있으면 `.env`보다 우선한다.
+MySQL root 비밀번호는 최초 초기화 때 자동 생성하며 앱은 DB_USERNAME 계정만 사용한다.
+prod 프로필은 `.env`를 읽지 않고 배포 환경에서 주입한 값을 사용한다.
 기본 프로필은 `local`이고 운영에서는 `SPRING_PROFILES_ACTIVE=prod`를 명시한다.
 로컬 MySQL 포트 기본값은 3307이다. 변경하면 DB_URL도 함께 수정한다.
 상태 확인은 `curl --fail http://localhost:8080/actuator/health`로 한다.
