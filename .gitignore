@@ -44,3 +44,6 @@ out/
 .env.*
 !.env.example
 *.log
+
+# Python deployment checks
+__pycache__/

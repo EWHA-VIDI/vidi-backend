@@ -1,5 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
-
 plugins {
     kotlin("jvm") version "2.3.21"
     kotlin("plugin.spring") version "2.3.21"
@@ -16,7 +14,7 @@ description = "vidi-backend"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -73,12 +71,6 @@ ktlint {
 
 detekt {
     buildUponDefaultConfig = true
-}
-
-// Detekt 1.x analyzes Kotlin source with its supported JVM target.
-// Application compilation and runtime continue to use Java 25.
-tasks.withType<Detekt>().configureEach {
-    jvmTarget = "21"
 }
 
 tasks.bootJar {
