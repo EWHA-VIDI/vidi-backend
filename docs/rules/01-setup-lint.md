@@ -4,8 +4,8 @@
 
 ## 규칙
 
-- Gradle은 JDK 21로 실행하고 JAVA_HOME_25_X64에 앱 toolchain인 JDK 25를 지정한다.
-- Detekt 안정판 1.23.8의 분석 target은 21로 유지하고 앱 컴파일 target 25와 구분한다.
+- Gradle과 애플리케이션은 JDK 21로 통일하고 JAVA_HOME을 JDK 21 경로로 지정한다.
+- Detekt 안정판 1.23.8은 JDK 21 기본 설정을 사용하고 별도 jvmTarget을 덮어쓰지 않는다.
 - Detekt 구성의 Kotlin 2.0.21 고정은 내장 분석기 호환성에만 적용한다.
 - `.editorconfig`와 ktlint 1.8.0의 ktlint_official 스타일을 사용한다.
 - Kotlin은 공백 4칸, yml은 공백 2칸, UTF-8과 LF, 마지막 개행을 사용한다.
@@ -14,7 +14,8 @@
 - 자동 포맷은 `./gradlew ktlintFormat`으로 수행하고 변경을 확인한다.
 - 공통 설정은 application.yml, 프로필 차이는 application-local.yml과 application-prod.yml에 둔다.
 - 새 설정값은 환경변수 이름과 용도를 `.env.example` 및 README에 함께 기록한다.
-- `.env`는 셸 또는 IDE에서 주입하고 Spring Boot가 자동으로 읽는다고 가정하지 않는다.
+- local 프로필은 작업 디렉터리의 `.env`를 properties 형식으로 자동으로 읽는다.
+- `.env` 값은 따옴표와 export 없이 KEY=value로 적고 prod에서는 외부 환경변수를 주입한다.
 - 날짜·DB 세션·로그는 UTC, API 날짜는 ISO-8601 문자열로 유지한다.
 - MySQL과 Flyway를 사용하고 ddl-auto=validate, open-in-view=false를 유지한다.
 - DB 변경 시 도메인 담당자가 새 버전 migration을 작성하고 이미 적용한 파일은 유지한다.
