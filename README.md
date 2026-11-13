@@ -40,7 +40,9 @@ Flyway는 `src/main/resources/db/migration`의 버전 마이그레이션을 실�
 초기 뼈대에는 테이블을 만들지 않는다. 도메인 담당자가 스키마와 migration을 함께 추가한다.
 Hibernate `ddl-auto=validate`를 유지하며 기존 migration을 수정하지 않는다.
 UTC로 DB 세션·JDBC·Jackson·로그를 통일하고 날짜는 ISO-8601 문자열로 직렬화한다.
-Swagger는 local에서만 켜며 `/v3/api-docs`, `/swagger-ui/index.html`도 현재 인증이 필요하다.
+Swagger는 local에서만 켜며 `/v3/api-docs`, `/swagger-ui/index.html`을 인증 없이 읽는다.
+이 예외는 local이고 prod가 아닌 경우에만 적용하며 업무 API의 기본 인증은 유지한다.
+로컬 BE 실행 후 FE에서 `npm run api:generate`를 실행해 타입을 생성한다.
 
 ## 구조
 
@@ -48,3 +50,8 @@ Swagger는 local에서만 켜며 `/v3/api-docs`, `/swagger-ui/index.html`도 현
 조회 서비스와 변경 서비스는 분리하고 다른 도메인의 Repository를 직접 사용하지 않는다.
 작업 전에 `AGENTS.md`와 관련 규칙 파일을 읽는다.
 팀원 환경에서의 실행과 2인 리뷰는 PR 체크리스트에서 별도로 확인한다.
+
+## 배포
+
+[컨테이너·OIDC·ECR·SSM 배포 설정](docs/deployment.md)을 사용한다.
+FE Dockerfile과 Nginx 설정은 FE 레포에서 관리한다.
