@@ -20,7 +20,7 @@ jobs:
           MYSQL_USER: vidi
           MYSQL_PASSWORD: ci-only-password
           MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-        ports: ['3307:3306']
+        ports: ["3307:3306"]
         options: >-
           --health-cmd="MYSQL_PWD=ci-only-password mysql --host=127.0.0.1 --protocol=TCP --user=vidi --database=vidi --execute='SELECT 1' --silent"
           --health-interval=5s
@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
       - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
       - run: ./gradlew --no-daemon build
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -44,11 +44,3 @@ jobs:
         with:
           name: backend-reports
           path: build/reports/
-
-  deployment:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: python3 -m unittest discover -s tests/deployment -p 'test_*.py'
-      - run: python3 tests/deployment/check_nginx.py

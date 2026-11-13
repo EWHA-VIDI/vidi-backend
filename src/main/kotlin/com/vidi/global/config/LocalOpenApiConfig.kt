@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Profile("local & !prod")
 @ConditionalOnProperty(prefix = "springdoc.api-docs", name = ["enabled"], havingValue = "true")
 class LocalOpenApiConfig {
+    // TODO(security): SecurityFilterChain 구현 시 문서 경로를 permitAll로 옮기고 이 Customizer를 제거한다.
     // Keep Boot's default security chain; only local documentation bypasses authentication.
     @Bean
     fun localOpenApiSecurity(): WebSecurityCustomizer =

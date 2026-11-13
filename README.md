@@ -54,4 +54,4 @@ Swagger는 local에서만 켜며 `/v3/api-docs`, `/swagger-ui/index.html`을 인
 ## 배포
 
 [컨테이너·OIDC·ECR·SSM 배포 설정](docs/deployment.md)을 사용한다.
-FE Dockerfile과 Nginx 설정도 공통 인프라의 deploy 디렉터리에서 관리한다.
+FE Dockerfile과 Nginx 설정은 FE 레포에서 관리한다.
