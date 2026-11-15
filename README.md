@@ -35,7 +35,8 @@ Spring Security 기본 보안이 적용되어 비공개 경로는 인증 없이 
 ./gradlew ktlintFormat
 ```
 
-테스트는 로컬 MySQL과 같은 환경변수로 실행하며 DB가 먼저 준비되어야 한다.
+테스트는 로컬 MySQL과 `.env` 설정으로 실행하며 DB가 먼저 준비되어야 한다.
+prod 프로필 접근 테스트도 테스트 설정에서만 `.env`를 읽으며 실제 prod 설정은 변경하지 않는다.
 Flyway는 `src/main/resources/db/migration`의 버전 마이그레이션을 실행한다.
 초기 뼈대에는 테이블을 만들지 않는다. 도메인 담당자가 스키마와 migration을 함께 추가한다.
 Hibernate `ddl-auto=validate`를 유지하며 기존 migration을 수정하지 않는다.

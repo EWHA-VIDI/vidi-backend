@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest
+@SpringBootTest(properties = ["spring.config.import=optional:file:.env[.properties]"])
 @AutoConfigureMockMvc
 @ActiveProfiles("prod")
 class ProdOpenApiAccessTests
