@@ -45,6 +45,7 @@ Swagger는 local에서만 켜며 `/v3/api-docs`, `/swagger-ui/index.html`도 현
 ## 구조
 
 `global`은 공통 설정, `domain/<도메인>`은 controller, service, repository, entity, dto를 둔다.
+회원 도메인은 ERD의 member 테이블과 맞춰 `domain/member`를 사용한다.
 조회 서비스와 변경 서비스는 분리하고 다른 도메인의 Repository를 직접 사용하지 않는다.
 작업 전에 `AGENTS.md`와 관련 규칙 파일을 읽는다.
 팀원 환경에서의 실행과 2인 리뷰는 PR 체크리스트에서 별도로 확인한다.
