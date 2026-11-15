@@ -33,7 +33,7 @@ type(scope): 작업 내용 [Jira 이슈 키]
 ```
 feat(auth): 로그인 기능 구현 [VIDI-12]
 fix(ui): 로그인 페이지 레이아웃 오류 수정 [VIDI-15]
-refactor(user): 사용자 서비스 로직 분리 [VIDI-20]
+refactor(member): 회원 서비스 로직 분리 [VIDI-20]
 test(auth): 로그인 API 테스트 작성 [VIDI-30]
 build(config): Gradle 의존성 추가 [VIDI-101]
 ci: GitHub Actions 테스트 자동화 설정 [VIDI-45]
@@ -106,7 +106,7 @@ Scope는 선택이며, 분야별 Scope를 우선 쓴다. 목록에 없는 Scope�
 | Scope    | 설명                        |
 | -------- | --------------------------- |
 | auth     | 인증 및 인가                |
-| user     | 사용자 관련 기능            |
+| member   | 회원 관련 기능              |
 | api      | 공통 API 및 요청·응답 처리  |
 | db       | 데이터베이스 및 데이터 접근 |
 | security | 보안 설정 및 접근 권한 관리 |
@@ -127,17 +127,17 @@ Scope는 선택이며, 분야별 Scope를 우선 쓴다. 목록에 없는 Scope�
 
 ## 2. Branch Convention
 
-브랜치명은 type/이슈키-설명 형식이며, 브랜치명의 이슈 키가 Jira 자동화(개발중 전환)를 일으키므로 반드시 넣는다. 브랜치 전략은 main + develop을 두는 Git Flow를 간소화해 쓴다.
+브랜치명은 type/이슈키-설명 형식이며, 브랜치명의 이슈 키가 Jira 자동화(진행 중 전환)를 일으키므로 반드시 넣는다. 브랜치 전략은 main + develop을 두는 Git Flow를 간소화해 쓴다.
 
 ### 2-1. 브랜치 종류
 
-| Branch      | 설명                                                                  | 분기 위치 | 병합 대상     |
-| ----------- | --------------------------------------------------------------------- | --------- | ------------- |
-| main        | 배포 가능한 안정 상태                                                 | -         | -             |
-| develop     | 개발 작업 통합                                                        | main      | -             |
-| 작업 브랜치 | feat, fix, refactor, style, docs, test, chore, build, ci, perf, infra | develop   | develop       |
-| hotfix      | 배포 후 긴급 오류 수정                                                | main      | main, develop |
-| release     | 배포 준비 및 버전 관리                                                | develop   | main, develop |
+| Branch      | 설명                                                                          | 분기 위치 | 병합 대상     |
+| ----------- | ----------------------------------------------------------------------------- | --------- | ------------- |
+| main        | 배포 가능한 안정 상태                                                         | -         | -             |
+| develop     | 개발 작업 통합                                                                | main      | -             |
+| 작업 브랜치 | feat, fix, refactor, style, docs, test, chore, build, ci, perf, revert, infra | develop   | develop       |
+| hotfix      | 배포 후 긴급 오류 수정                                                        | main      | main, develop |
+| release     | 배포 준비 및 버전 관리                                                        | develop   | main, develop |
 
 작업 브랜치의 type은 1-2의 Commit Type과 같은 목록을 쓴다. 기능 브랜치는 feature가 아니라 feat로 쓴다.
 
@@ -150,7 +150,7 @@ type/이슈키-설명
 ```
 feat/VIDI-12-login
 fix/VIDI-15-login-validation
-refactor/VIDI-20-user-service
+refactor/VIDI-20-member-service
 docs/VIDI-25-readme-update
 test/VIDI-30-login-test
 build/VIDI-101-gradle-dependency
@@ -282,11 +282,11 @@ Jira와 GitHub는 연동되어 있고, Task 상태는 브랜치 생성과 PR 병
 
 | GitHub 이벤트                | Jira 상태 | 조건                                                     |
 | ---------------------------- | --------- | -------------------------------------------------------- |
-| 이슈 키가 들어간 브랜치 생성 | 개발중    | 브랜치명에 VIDI-12 형태의 키가 있어야 함                 |
-| 연결된 PR 병합               | 개발 완료 | PR이 키로 이슈에 연결돼 있어야 함(브랜치명 또는 PR 제목) |
+| 이슈 키가 들어간 브랜치 생성 | 진행 중   | 브랜치명에 VIDI-12 형태의 키가 있어야 함                 |
+| 연결된 PR 병합               | 완료      | PR이 키로 이슈에 연결돼 있어야 함(브랜치명 또는 PR 제목) |
 
 - Jira 상태는 사람이 직접 옮기지 않는다. 자동화가 없는 경우(작업 취소, 보류, 재오픈)만 수동으로 바꾼다.
-- 브랜치를 만들었는데 개발중으로 바뀌지 않았다면 브랜치명의 키를 먼저 점검한다.
+- 브랜치를 만들었는데 진행 중으로 바뀌지 않았다면 브랜치명의 키를 먼저 점검한다.
 - PR 하나에 여러 키를 넣지 않는다.
 - PR 본문에서 다른 Task를 언급할 때도 주의한다. 연동 방식에 따라 본문의 키도 연결될 수 있다.
 
@@ -294,7 +294,7 @@ Jira와 GitHub는 연동되어 있고, Task 상태는 브랜치 생성과 PR 병
 
 | 위치        | 예시                                   | 역할                                     |
 | ----------- | -------------------------------------- | ---------------------------------------- |
-| 브랜치명    | feat/VIDI-12-login                     | 개발중 전환, 브랜치의 모든 커밋·PR 연결  |
+| 브랜치명    | feat/VIDI-12-login                     | 진행 중 전환, 브랜치의 모든 커밋·PR 연결 |
 | 커밋 메시지 | feat(auth): 로그인 기능 구현 [VIDI-12] | 커밋 단위 추적                           |
 | PR 제목     | feat(auth): 로그인 기능 구현 [VIDI-12] | PR 연결, Squash 후 develop 커밋에도 남음 |
 
@@ -313,7 +313,7 @@ type(scope): 작업 내용 요약 [Jira 이슈 키]
 ```
 feat(auth): 로그인 기능 구현 [VIDI-12]
 fix(ui): 로그인 페이지 오류 수정 [VIDI-15]
-refactor(user): 사용자 서비스 로직 분리 [VIDI-20]
+refactor(member): 회원 서비스 로직 분리 [VIDI-20]
 infra: AWS 배포 환경 구성 [VIDI-35]
 ```
 
@@ -332,7 +332,7 @@ infra: AWS 배포 환경 구성 [VIDI-35]
 - CI가 모두 통과해야 병합한다.
 - 작업 브랜치 → develop은 **Squash and Merge**만 쓴다. 병합 창의 커밋 제목이 PR 제목과 같은지 확인한다.
 - release, hotfix → main은 develop과 히스토리를 맞추기 위해 **Create a merge commit**을 쓴다.
-- 병합 후 브랜치는 자동 삭제되고, Jira Task는 자동으로 개발 완료가 된다.
+- 병합 후 브랜치는 자동 삭제되고, Jira Task는 자동으로 완료가 된다.
 
 ## 6. Code Review Convention
 
@@ -350,7 +350,7 @@ infra: AWS 배포 환경 구성 [VIDI-35]
 
 ```
 [P1] 토큰 만료 시 예외가 처리되지 않아 500이 반환됩니다. 401로 내려주세요.
-[P3] 이 로직은 UserService로 분리하면 테스트가 쉬워질 것 같아요.
+[P3] 이 로직은 MemberQueryService로 분리하면 테스트가 쉬워질 것 같아요.
 [P5] 변수명이 직관적이라 읽기 좋네요.
 ```
 
@@ -366,13 +366,13 @@ infra: AWS 배포 환경 구성 [VIDI-35]
 
 1. Jira Task 생성 (Epic, 담당자, Component 지정)
 2. 최신 develop 반영: git switch develop && git pull
-3. 이슈 키가 들어간 브랜치 생성 후 push → Jira: 개발중 (자동)
+3. 이슈 키가 들어간 브랜치 생성 후 push → Jira: 진행 중 (자동)
 4. 개발 및 Commit (commitlint가 형식 검사)
 5. 로컬 테스트
 6. PR 생성 (제목 = 커밋 형식, 템플릿 작성, 리뷰어 지정)
 7. CI 실행 (빌드, 테스트, PR 제목 검사)
 8. 팀원 Code Review → 수정 → Approve 2건
-9. Squash and Merge → Jira: 개발 완료 (자동), 브랜치 삭제 (자동)
+9. Squash and Merge → Jira: 완료 (자동), 브랜치 삭제 (자동)
 
 ## 8. 작업 분리 원칙
 
