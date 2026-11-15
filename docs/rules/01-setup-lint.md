@@ -9,7 +9,7 @@
 - Detekt 구성의 Kotlin 2.0.21 고정은 내장 분석기 호환성에만 적용한다.
 - `.editorconfig`와 ktlint 1.8.0의 ktlint_official 스타일을 사용한다.
 - Kotlin은 공백 4칸, yml은 공백 2칸, UTF-8과 LF, 마지막 개행을 사용한다.
-- 커밋 전 `./gradlew ktlintCheck detekt test`를 실행한다.
+- 커밋 전 `./gradlew ktlintCheck detekt`로 정적 검사를 실행한다.
 - PR 전 MySQL을 기동하고 `./gradlew build test ktlintCheck detekt`를 실행한다.
 - 자동 포맷은 `./gradlew ktlintFormat`으로 수행하고 변경을 확인한다.
 - 공통 설정은 application.yml, 프로필 차이는 application-local.yml과 application-prod.yml에 둔다.
