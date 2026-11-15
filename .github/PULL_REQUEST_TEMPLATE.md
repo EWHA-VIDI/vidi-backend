@@ -1,5 +1,5 @@
 <!--
-PR 제목 형식: [TYPE] 작업 내용 요약   예) [FEAT] 카카오 로그인 API 구현
+PR 제목 형식: type(scope): 작업 내용 [VIDI-번호]   예) feat(auth): 로그인 API 구현 [VIDI-번호]
 -->
 
 ## 📌 관련 이슈
@@ -41,7 +41,7 @@ VIDI-
 
 
 ## ✅ 체크리스트
-- [ ] PR 제목이 `[TYPE] 작업 내용 요약` 형식이다
+- [ ] PR 제목이 `type(scope): 작업 내용 [VIDI-번호]` 형식이다
 - [ ] 브랜치명이 `type/VIDI-번호-설명` 형식이다
 - [ ] 커밋 메시지가 `type(scope): 작업 내용 [VIDI-번호]` 형식이다
 - [ ] base 브랜치가 develop이다 (hotfix, release는 예외)
