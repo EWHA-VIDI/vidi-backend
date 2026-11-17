@@ -34,12 +34,14 @@ TLS reverse proxy는 FE로 요청을 전달하며 Host와 X-Forwarded-Proto를 �
 
 | 위치           | 값과 용도                                                                                        |
 | -------------- | ------------------------------------------------------------------------------------------------ |
-| BE 실행 환경   | SPRING_PROFILES_ACTIVE=prod, DB_URL, DB_USERNAME, DB_PASSWORD                                    |
+| BE 실행 환경   | SPRING_PROFILES_ACTIVE=prod, DB_URL, DB_USERNAME, DB_PASSWORD, JWT_SECRET                        |
 | FE 빌드 공개값 | VITE_API_BASE_URL=/api                                                                           |
 | 향후 배포 설정 | AWS_REGION, AWS_DEPLOY_ROLE_ARN, 각 레포의 ECR repository, EC2_INSTANCE_ID, SSM_PARAMETER_PREFIX |
 
 로컬 DB 값은 `.env.example`을 참고하고 실제 비밀값은 커밋하지 않는다.
-운영 DB 값은 SSM Parameter Store SecureString으로 관리하고 서버에서 주입한다.
+FE와 BE를 같은 origin의 Nginx `/api/` 프록시로 연결하면 CORS_ALLOWED_ORIGINS는 비워 둔다.
+다른 origin에서 API를 호출할 때만 배포 FE 주소를 CORS_ALLOWED_ORIGINS에 쉼표로 구분해 넣는다.
+운영 DB 값과 비밀값은 SSM Parameter Store SecureString으로 관리하고 서버에서 주입한다.
 DB_URL에는 TLS 검증과 UTC 세션 설정을 포함하고 RDS CA를 신뢰하도록 구성한다.
 FE의 VITE 환경변수와 Docker build argument에 서버 비밀값을 넣지 않는다.
 
