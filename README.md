@@ -27,10 +27,8 @@ prod 프로필은 `.env`를 읽지 않고 배포 환경에서 주입한 값을 �
 `JWT_SECRET`은 JWT 서명 비밀키로 32바이트 이상이어야 하며 prod에서는 반드시 주입한다.
 local에서 `JWT_SECRET`을 지정하지 않으면 개발용 기본값을 사용하므로 배포 환경에 재사용하지 않는다.
 `JWT_ACCESS_TOKEN_EXPIRATION`은 Access Token 유효 시간이며 기본값은 `30m`이다.
-`CORS_ALLOWED_ORIGINS`는 CORS를 허용할 FE 주소 목록이며 쉼표로 구분한다.
 local 기본값은 Vite 개발 서버 `http://localhost:5173`, `http://127.0.0.1:5173`이고 prod 기본값은 비어 있다.
 상태 확인은 `curl --fail http://localhost:8080/actuator/health`로 한다.
-API는 `Authorization: Bearer <JWT>` 헤더로 인증하며 토큰이 없거나 유효하지 않으면 401을 반환한다.
 인증 없이 여는 경로는 `/api/auth/**`, `/actuator/health`, local의 Swagger 문서 경로다.
 로그인 API가 준비되기 전 외부 서비스로 공개하지 않는다.
 
