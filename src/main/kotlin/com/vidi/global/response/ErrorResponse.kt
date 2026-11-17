@@ -20,6 +20,6 @@ data class ErrorResponse(
         fun of(
             errorCode: ErrorCode,
             errors: List<FieldError> = emptyList(),
-        ): ErrorResponse = ErrorResponse(errorCode.code, errorCode.message, errors)
+        ): ErrorResponse = ErrorResponse(errorCode.name, errorCode.message, errors)
     }
 }
