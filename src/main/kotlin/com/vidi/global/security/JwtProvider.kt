@@ -1,5 +1,6 @@
 package com.vidi.global.security
 
+import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
@@ -30,7 +31,7 @@ class JwtProvider(
             .compact()
     }
 
-    fun getSubject(token: String): String? =
+    fun parse(token: String): JwtParseResult =
         try {
             Jwts
                 .parser()
@@ -40,10 +41,14 @@ class JwtProvider(
                 .payload
                 .subject
                 ?.takeIf { it.isNotBlank() }
+                ?.let { JwtParseResult.Valid(it) }
+                ?: JwtParseResult.Invalid
+        } catch (_: ExpiredJwtException) {
+            JwtParseResult.Expired
         } catch (_: JwtException) {
-            null
+            JwtParseResult.Invalid
         } catch (_: IllegalArgumentException) {
-            null
+            JwtParseResult.Invalid
         }
 
     private companion object {
