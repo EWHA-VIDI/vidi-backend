@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: ko-KR
+tone_instructions: "한국어로 간결하게 리뷰하고, 지적에는 근거가 되는 AGENTS.md 또는 docs/rules 파일을 함께 적는다."
+
+reviews:
+  profile: chill
+  high_level_summary: true
+  sequence_diagrams: false
+  poem: false
+  in_progress_fortune: false
+  auto_approvals:
+    enabled: false
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - develop
+      - main
+      - "release/.*"
+  path_filters:
+    - "!build/**"
+    - "!**/build/**"
+    - "!.gradle/**"
+    - "!gradle/wrapper/**"
+    - "!gradlew"
+    - "!gradlew.bat"
+  path_instructions:
+    - path: "src/main/kotlin/**"
+      instructions: >-
+        docs/rules/10-api-contract.md, 13-transaction-logging.md, 20-package-structure.md 기준으로 리뷰한다.
+        도메인 패키지 구성, 조회·변경 서비스 분리, Facade와 QueryService 사용, Entity 비노출을 확인한다.
+    - path: "src/test/kotlin/**"
+      instructions: "docs/rules/23-testing.md 기준으로 테스트 범위와 작성 방식을 리뷰한다."
+    - path: "src/main/resources/db/migration/**"
+      instructions: >-
+        Flyway 마이그레이션이다. 이미 적용된 파일 수정, MySQL 8.4 호환성, Entity와의 스키마 불일치(ddl-auto=validate)를 확인한다.
+    - path: "src/main/resources/**/*.yml"
+      instructions: "docs/rules/01-setup-lint.md 기준으로 확인하고 비밀값이 커밋되지 않았는지 본다."
+    - path: "docs/rules/**"
+      instructions: >-
+        규칙 파일 변경이다. AGENTS.md의 담당 번호 규칙과 공통 규칙의 두 레포 동시 PR 원칙을 지켰는지 확인한다.
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "AGENTS.md"
+      - "docs/git-convention.md"
+      - "docs/rules/**/*.md"
