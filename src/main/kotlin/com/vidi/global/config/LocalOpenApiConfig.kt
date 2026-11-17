@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain
 @Profile("local & !prod")
 @ConditionalOnProperty(prefix = "springdoc.api-docs", name = ["enabled"], havingValue = "true")
 class LocalOpenApiConfig {
-    // Runs before the main chain so only local documentation paths skip authentication.
+    // 기본 체인보다 먼저 실행해 local 문서 경로만 인증 없이 연다.
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     fun localOpenApiSecurity(http: HttpSecurity): SecurityFilterChain =

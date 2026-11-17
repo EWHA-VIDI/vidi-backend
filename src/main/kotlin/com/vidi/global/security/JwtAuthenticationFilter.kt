@@ -17,7 +17,7 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
-        // Invalid tokens fall through unauthenticated so the entry point decides the 401.
+        // 유효하지 않은 토큰은 인증 없이 통과시키고, 401 응답은 EntryPoint가 정한다.
         resolveToken(request)
             ?.let(jwtProvider::getSubject)
             ?.let { subject ->

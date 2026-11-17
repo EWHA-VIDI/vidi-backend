@@ -15,7 +15,7 @@ class JwtProvider(
 ) {
     private val key: SecretKey =
         properties.secret.toByteArray(Charsets.UTF_8).let { bytes ->
-            require(bytes.size >= MIN_SECRET_BYTES) { "JWT secret must be at least $MIN_SECRET_BYTES bytes." }
+            require(bytes.size >= MIN_SECRET_BYTES) { "JWT 비밀키는 ${MIN_SECRET_BYTES}바이트 이상이어야 합니다." }
             Keys.hmacShaKeyFor(bytes)
         }
 
