@@ -4,6 +4,8 @@ import com.vidi.global.error.ErrorCode
 import com.vidi.global.response.ErrorResponse.FieldError
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
 import tools.jackson.databind.json.JsonMapper
 import tools.jackson.module.kotlin.KotlinModule
 
@@ -33,5 +35,14 @@ class ApiResponseTest {
         mapper.writeValueAsString(response) shouldBe
             """{"success":false,"code":"INVALID_INPUT","message":"입력값이 올바르지 않습니다.",""" +
             """"errors":[{"field":"videoUrl","reason":"형식 오류"}]}"""
+    }
+
+    @Test
+    fun `목록 응답은 data에 페이지 정보를 담는다`() {
+        val response = ApiResponse.ok(PageResponse.from(PageImpl(listOf("a", "b"), PageRequest.of(0, 2), 5)))
+
+        mapper.writeValueAsString(response) shouldBe
+            """{"success":true,"data":{"content":["a","b"],"page":0,"size":2,""" +
+            """"totalElements":5,"totalPages":3,"hasNext":true}}"""
     }
 }
