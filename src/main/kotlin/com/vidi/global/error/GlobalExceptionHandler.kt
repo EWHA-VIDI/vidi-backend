@@ -7,6 +7,8 @@ import jakarta.validation.ConstraintViolationException
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -90,6 +92,8 @@ class GlobalExceptionHandler {
         e: Exception,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
+        // Spring Security의 EntryPoint와 AccessDeniedHandler가 401·403 응답을 만들도록 넘긴다.
+        if (e is AccessDeniedException || e is AuthenticationException) throw e
         log.error("Unhandled exception: {} {}", request.method, request.requestURI, e)
         return respond(ErrorCode.INTERNAL_ERROR)
     }

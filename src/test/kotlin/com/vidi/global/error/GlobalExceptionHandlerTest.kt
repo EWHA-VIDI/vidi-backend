@@ -1,5 +1,6 @@
 package com.vidi.global.error
 
+import jakarta.servlet.ServletException
 import jakarta.validation.ConstraintViolationException
 import jakarta.validation.Valid
 import jakarta.validation.Validation
@@ -9,11 +10,13 @@ import jakarta.validation.constraints.Pattern
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.not
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import kotlin.test.assertIs
 
 @WebMvcTest(controllers = [GlobalExceptionHandlerTest.ErrorTestController::class])
 @AutoConfigureMockMvc(addFilters = false)
@@ -85,6 +89,15 @@ class GlobalExceptionHandlerTest
                 .andExpect(content().string(not(containsString("SELECT"))))
         }
 
+        @Test
+        fun `Security 예외는 처리하지 않고 Security 필터로 다시 던진다`() {
+            val thrown =
+                assertThrows<ServletException> {
+                    mockMvc.perform(get("/test/errors/access-denied"))
+                }
+            assertIs<AccessDeniedException>(thrown.cause)
+        }
+
         private fun ResultActions.andExpectError(
             status: Int,
             errorCode: ErrorCode,
@@ -127,6 +140,9 @@ class GlobalExceptionHandlerTest
 
             @GetMapping("/unexpected")
             fun unexpected(): Unit = error("SELECT * FROM member failed")
+
+            @GetMapping("/access-denied")
+            fun accessDenied(): Unit = throw AccessDeniedException("denied")
         }
 
         companion object {
