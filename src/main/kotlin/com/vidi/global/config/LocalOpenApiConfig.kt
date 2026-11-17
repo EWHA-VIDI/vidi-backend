@@ -4,22 +4,22 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.web.SecurityFilterChain
 
 @Configuration(proxyBeanMethods = false)
 @Profile("local & !prod")
 @ConditionalOnProperty(prefix = "springdoc.api-docs", name = ["enabled"], havingValue = "true")
 class LocalOpenApiConfig {
-    // TODO(security): SecurityFilterChain 구현 시 문서 경로를 permitAll로 옮기고 이 Customizer를 제거한다.
-    // Keep Boot's default security chain; only local documentation bypasses authentication.
+    // Runs before the main chain so only local documentation paths skip authentication.
     @Bean
-    fun localOpenApiSecurity(): WebSecurityCustomizer =
-        WebSecurityCustomizer { web ->
-            web.ignoring().requestMatchers(
-                "/v3/api-docs",
-                "/v3/api-docs/**",
-                "/swagger-ui.html",
-                "/swagger-ui/**",
-            )
-        }
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    fun localOpenApiSecurity(http: HttpSecurity): SecurityFilterChain =
+        http
+            .securityMatcher("/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")
+            .authorizeHttpRequests { it.anyRequest().permitAll() }
+            .csrf { it.disable() }
+            .build()
 }

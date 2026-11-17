@@ -28,8 +28,9 @@ prod 프로필은 `.env`를 읽지 않고 배포 환경에서 주입한 값을 �
 local에서 `JWT_SECRET`을 지정하지 않으면 개발용 기본값을 사용하므로 배포 환경에 재사용하지 않는다.
 `JWT_ACCESS_TOKEN_EXPIRATION`은 Access Token 유효 시간이며 기본값은 `30m`이다.
 상태 확인은 `curl --fail http://localhost:8080/actuator/health`로 한다.
-Spring Security 기본 보안이 적용되어 비공개 경로는 인증 없이 접근할 수 없다.
-인증 정책과 JWT 필터는 별도 담당자가 구현한다. 실제 사용자 인증이 준비되기 전 외부 서비스로 공개하지 않는다.
+API는 `Authorization: Bearer <JWT>` 헤더로 인증하며 토큰이 없거나 유효하지 않으면 401을 반환한다.
+인증 없이 여는 경로는 `/api/auth/**`, `/actuator/health`, local의 Swagger 문서 경로다.
+로그인 API가 준비되기 전 외부 서비스로 공개하지 않는다.
 
 ## 검사
 
