@@ -29,6 +29,12 @@ management:
       probes:
         enabled: true
 
+vidi:
+  security:
+    jwt:
+      secret: "${JWT_SECRET}"
+      access-token-expiration: "${JWT_ACCESS_TOKEN_EXPIRATION:30m}"
+
 springdoc:
   api-docs:
     enabled: false

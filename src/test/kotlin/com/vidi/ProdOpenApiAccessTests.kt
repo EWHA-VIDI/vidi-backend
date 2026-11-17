@@ -12,7 +12,12 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest(properties = ["spring.config.import=optional:file:.env[.properties]"])
+@SpringBootTest(
+    properties = [
+        "spring.config.import=optional:file:.env[.properties]",
+        "vidi.security.jwt.secret=test-only-jwt-secret-that-is-at-least-32-bytes",
+    ],
+)
 @AutoConfigureMockMvc
 @ActiveProfiles("prod")
 class ProdOpenApiAccessTests

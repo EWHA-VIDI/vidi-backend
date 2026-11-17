@@ -6,6 +6,12 @@ spring:
     username: "${DB_USERNAME:vidi}"
     password: "${DB_PASSWORD}"
 
+vidi:
+  security:
+    jwt:
+      # Local-only fallback; never reuse it in deployed environments.
+      secret: "${JWT_SECRET:local-only-insecure-jwt-secret-change-me}"
+
 springdoc:
   api-docs:
     enabled: true
